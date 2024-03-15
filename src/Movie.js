@@ -13,10 +13,22 @@ import CardMedia from '@mui/material/CardMedia';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-export default function Movie({movieTake}) {
+export default function Movie({movieTake,getMovies}) {
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
+
+  const deleteMovie = (id) => {
+    // console.log(id);
+    fetch(`https://65f16b8f034bdbecc7627180.mockapi.io/movie/${id}`, {
+      method:"DELETE",
+    })
+    .then(()=> getMovies())
+    .then(() => alert("this card gets deleted now."))
+  };
+
+
   return (
     <Card className='movie-container' sx={{ maxWidth: 345 }}>
         <CardMedia className="movie-poster" height="140" alt="VIKRAM" image={movieTake.poster}/> 
@@ -40,6 +52,9 @@ export default function Movie({movieTake}) {
         <Counter />
         <IconButton sx={{marginLeft:"auto"}} aria-label="editMovie" onClick={()=> navigate(`/portal/edit/${movieTake.id}`)}>
           <EditIcon color="secondary"/>
+        </IconButton>
+        <IconButton sx={{marginLeft:"auto"}} aria-label="deleteMovie" onClick={()=> deleteMovie(movieTake.id)}>
+          <DeleteForeverIcon color="secondary"/>
         </IconButton>
         </CardActions>
     </Card>

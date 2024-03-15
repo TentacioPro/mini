@@ -112,7 +112,7 @@ const getMovies = () =>{
             {
                 movie.map( (list,index) => (
                     <div key={index}>
-                        <Movie movieTake={list}/>
+                        <Movie movieTake={list} getMovies={getMovies}/>
                     </div>
                 )) 
             }
